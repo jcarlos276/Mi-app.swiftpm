@@ -5,13 +5,18 @@ final class MainCoordinator: NavigationCoordinatable {
 let stack = NavigationStack(initial: \MainCoordinator.start)
     
     @Root var start = makeStart
-    @Root var home = makeHome
+    @Root var authenticated = makeAuthenticated
+    @Root var unauthenticated = makeUnauthenticated
     
     func makeStart() -> some View {
         LoginView()
     }
     
-    func makeHome() -> some View {
-        HomeView()
+    func makeUnauthenticated() -> NavigationViewCoordinator<UnauthenticatedCoordinator> {
+        UnauthenticatedCoordinator().eraseToNavigationCoordinator()
+    }
+    
+    func makeAuthenticated() -> NavigationViewCoordinator<AuthenticatedCoordinator> {
+        AuthenticatedCoordinator().eraseToNavigationCoordinator()
     }
 }
