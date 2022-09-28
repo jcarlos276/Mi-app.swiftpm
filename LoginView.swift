@@ -54,7 +54,7 @@ struct LoginView: View {
     var loginButton: some View {
         Button(action: {
             print("Log in")
-            router.root(\.home)
+            router.root(\.authenticated)
         }) {
             Text("Log in")
                 .padding()
