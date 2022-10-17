@@ -14,7 +14,18 @@ struct HomeView: View {
             }
             .pickerStyle(.segmented)
             .padding()
-            
+            ScrollView {
+                LazyVGrid(columns: [.init(), .init()], alignment: .center) {
+                    ShowCellView()
+                    ShowCellView()
+                    ShowCellView()
+                    ShowCellView()
+                    ShowCellView()
+                    ShowCellView()
+                }
+                .padding(.horizontal, 10)
+            }
         }
+        .background(Color.init(.almostBlack))
     }
 }
