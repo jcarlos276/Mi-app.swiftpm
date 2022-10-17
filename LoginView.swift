@@ -25,7 +25,7 @@ struct LoginView: View {
     }
     
     var background: some View {
-        LinearGradient(gradient: Gradient(colors: [Color(.primaryLight), Color(.primary),  Color(.primary)]), startPoint: .top, endPoint: .bottom)
+        LinearGradient(gradient: Gradient(colors: [Color(.primaryLight), Color(.almostBlack),  Color(.almostBlack)]), startPoint: .top, endPoint: .bottom)
             .edgesIgnoringSafeArea(.all)
     }
     
