@@ -33,13 +33,16 @@ let package = Package(
         )
     ],
     dependencies: [
-        .package(url: "https://github.com/rundfunk47/stinsen", "2.0.10"..<"3.0.0")
+        .package(url: "https://github.com/rundfunk47/stinsen", "2.0.10"..<"3.0.0"),
+        .package(url: "https://github.com/Moya/Moya.git", "15.0.3"..<"16.0.0")
     ],
     targets: [
         .executableTarget(
             name: "AppModule",
             dependencies: [
-                .product(name: "Stinsen", package: "stinsen")
+                .product(name: "Stinsen", package: "stinsen"),
+                .product(name: "Moya", package: "Moya"),
+                .product(name: "CombineMoya", package: "Moya")
             ],
             path: "."
         )
