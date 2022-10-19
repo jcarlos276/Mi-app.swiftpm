@@ -18,7 +18,10 @@ struct ApiKeyPlugin: PluginType {
         }
         
         var request = request
-        request.url?.appendPathComponent("api_key=\(apiKey)")
+        var components = URLComponents(string: request.url?.absoluteString ?? "")
+        components?.queryItems = [URLQueryItem(name: "api_key", value: apiKey)]
+        request.url = components?.url!
+        print("URL > \(request.url?.absoluteString ?? "")")
         return request
     }
 }
