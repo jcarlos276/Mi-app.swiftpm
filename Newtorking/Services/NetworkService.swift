@@ -25,13 +25,16 @@ struct NetworkService: NetworkServiceProtocol {
         self.provider = provider
     }
     
-    func execute(request: TargetType, decoder: JSONDecoder) -> AnyPublisher<Data, Error> {
-        Future<Data, Error> { promise in
+    func execute(request: TargetType, decoder: JSONDecoder) -> AnyPublisher<Data, ServiceError> {
+        Future<Data, ServiceError> { promise in
             provider.request(MultiTarget(request)) { result in
+                print(result)
                 switch result {
                 case .success(let response):
+                    print("SUCCESS")
                     promise(.success(response.data))
                 case .failure(let moyaError):
+                    print("FAILURE")
                     do {
                         if let data = moyaError.response?.data {
                             let customError = try JSONDecoder().decode(ServiceError.self, from: data)
@@ -40,7 +43,7 @@ struct NetworkService: NetworkServiceProtocol {
                             promise(.failure(ServiceError()))
                         }
                     } catch {
-                        promise(.failure(ServiceError(statusCode: -999, statusMessage: "Couldn't parse error")))
+                        promise(.failure(ServiceError(status_code: -999, status_message: "Couldn't parse error")))
                     }
                 }
             }
