@@ -1,22 +1,15 @@
 import SwiftUI
 
 struct ShowCellView: View {
-    @State var imageUrl: String
-    @State var name: String
-    @State var airDate: String
-    @State var rating: Double
-    @State var overview: String
+    @State var show: TVShow
+    var width: Double
+    var overview: String {
+        show.overview.isEmpty ? "No overview available" : show.overview
+    }
     
-    init(imageUrl: String = "",
-         name: String = "Insatiable",
-         airDate: String = "Aug 10, 2018",
-         rating: Double = 0,
-         overview: String = "A bullied teenager turns to beauty pageants as a way to exact her revenge, with the help of a disgraced coach who so...") {
-        self.imageUrl = imageUrl
-        self.name = name
-        self.airDate = airDate
-        self.rating = rating
-        self.overview = overview
+    init(show: TVShow = TVShow.defaultShow(), width: Double = 120.0) {
+        self.show = show
+        self.width = width
     }
     
     var body: some View {
@@ -34,21 +27,29 @@ struct ShowCellView: View {
     }
     
     @ViewBuilder func showCellImage() -> some View {
-        Image("img_logo")
-            .resizable()
-            .scaledToFill()
-            .scaledToFit()
-            .frame(height: 175)
-            .background(Color.black)
+        AsyncImage(url: URL(string: "https://image.tmdb.org/t/p/w500/\(show.backdrop_path)"), content: { phase in
+            switch phase {
+                case .success(let image):
+                image
+                    .resizable()
+                    .scaledToFill()
+                default:
+                Image("img_logo")
+            }
+        })
+        .frame(width: width, height: 175)
+        .clipped()
+        .background(Color.black)
     }
     
     @ViewBuilder func showCellHeader() -> some View {
         Group {
-            Text(name)
+            Text(show.name)
+                .lineLimit(1)
             HStack {
-                Text(airDate)
+                Text(show.first_air_date)
                 Spacer()
-                Text(String(format: "%.1f", [rating]))
+                Text(String(format: "%.1f", [show.vote_average]))
             }
             .font(.caption2)
             .lineLimit(1)
@@ -61,5 +62,6 @@ struct ShowCellView: View {
             .foregroundColor(.white)
             .font(.custom("system-default", size: 10))
             .lineLimit(4)
+            .frame(height: 56)
     }
 }
