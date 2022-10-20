@@ -3,6 +3,7 @@ import Combine
 class HomeViewModel: ObservableObject {
     @Published var selectedCategory: Category = .popular
     @Published var tvShows: [TVShow] = []
+    @Published var error: ServiceError?
     
     let categories = Category.allCases
     var tvShowsService: TvShowsServiceProtocol
@@ -10,7 +11,6 @@ class HomeViewModel: ObservableObject {
     
     init(tvShowsService: TvShowsServiceProtocol = TvShowsService()) {
         self.tvShowsService = tvShowsService
-        print("init HomeviewModel")
         setupBindings()
     }
     
@@ -28,10 +28,9 @@ class HomeViewModel: ObservableObject {
             .sink { completion in
                 switch completion {
                     case .failure(let error):
-                    print("ERROR HERE")
-                    print(error.localizedDescription)
+                    self.error = error
                     case .finished:
-                    return
+                    self.error = nil
                 }
             } receiveValue: { pagination in
                 self.tvShows = pagination.results
