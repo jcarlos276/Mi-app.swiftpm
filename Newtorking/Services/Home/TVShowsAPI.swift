@@ -13,7 +13,7 @@ extension TvShowsAPI: ApiKeyTargetType {
     var path: String {
         switch self {
         case .getTvShows(let category):
-            return "tv/\(category.getComponentName())"
+            return "tv/\(category.componentName)"
         }
     }
     

@@ -35,7 +35,7 @@ struct HomeView: View {
     @ViewBuilder func categoriesPicker() -> some View {
         Picker(selection: $viewModel.selectedCategory) { 
             ForEach(viewModel.categories, id: \.self) { category in
-                Text(category.rawValue)
+                Text(category.title)
             }
         } label: { 
             Text("")

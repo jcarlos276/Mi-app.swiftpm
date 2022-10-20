@@ -1,11 +1,11 @@
 import Combine
 
 class HomeViewModel: ObservableObject {
-    @Published var selectedCategory: Category = .popular
+    @Published var selectedCategory: Category = .getDefault()
     @Published var tvShows: [TVShow] = []
     @Published var error: ServiceError?
     
-    let categories = Category.allCases
+    let categories = Category.getAll()
     var tvShowsService: TvShowsServiceProtocol
     internal var cancellables: Set<AnyCancellable> = .init()
     

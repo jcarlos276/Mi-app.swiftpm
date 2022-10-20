@@ -1,14 +1,18 @@
 import Foundation
 
-enum Category: String, CaseIterable {
-    case popular = "Popular"
-    case topRated = "Top Rated"
-    case onTv = "On TV"
-    case airingToday = "Airing Today"
+struct Category: Hashable {
+    var title: String
+    var componentName: String
     
-    func getComponentName() -> String {
-        let name = self.rawValue.lowercased().replacingOccurrences(of: " ", with: "_")
-        return self == .onTv ? "on_the_air" : name
+    static func getDefault() -> Category {
+        Category(title: "Popular", componentName: "popular")
     }
     
+    static func getAll() -> [Category] {
+        let popular = Self.getDefault()
+        let topRated = Category(title: "Top Rated", componentName: "top_rated")
+        let onTv = Category(title: "On TV", componentName: "on_the_air")
+        let airingToday = Category(title: "Airing Today", componentName: "airing_today")
+        return [popular, topRated, onTv, airingToday]
+    }
 }
