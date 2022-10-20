@@ -8,7 +8,7 @@ protocol NetworkServiceProtocol {
 }
 
 extension NetworkServiceProtocol {
-    func execute<T: Decodable>(request: TargetType, decoder: JSONDecoder = .init()) -> AnyPublisher<T, ServiceError> {
+    func execute<T: Decodable>(request: TargetType, decoder: JSONDecoder = .snakeCase) -> AnyPublisher<T, ServiceError> {
         execute(request: request, decoder: decoder)
             .decode(type: T.self, decoder: decoder)
             .mapError { error in
@@ -43,7 +43,7 @@ struct NetworkService: NetworkServiceProtocol {
                             promise(.failure(ServiceError()))
                         }
                     } catch {
-                        promise(.failure(ServiceError(status_code: -999, status_message: "Couldn't parse error")))
+                        promise(.failure(ServiceError(statusCode: -999, statusMessage: "Couldn't parse error")))
                     }
                 }
             }

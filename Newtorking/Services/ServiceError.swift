@@ -1,11 +1,11 @@
 import SwiftUI
 
-struct ServiceError: Error, Decodable {
-    let status_code: Int
-    let status_message: String
+struct ServiceError: Error, Codable {
+    let statusCode: Int
+    let statusMessage: String
     
-    init(status_code: Int = 0, status_message: String = "Unknown") {
-        self.status_code = status_code
-        self.status_message = status_message
+    init(statusCode: Int = 0, statusMessage: String = "Unknown") {
+        self.statusCode = statusCode
+        self.statusMessage = statusMessage
     }
 }
