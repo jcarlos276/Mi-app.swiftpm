@@ -3,6 +3,9 @@ import SwiftUI
 struct ShowCellView: View {
     @State var show: TVShow
     var width: Double
+    var backDropPath: String {
+        "https://image.tmdb.org/t/p/w500/\(show.backdropPath ?? "")"
+    }
     var overview: String {
         show.overview.isEmpty ? "No overview available" : show.overview
     }
@@ -27,7 +30,7 @@ struct ShowCellView: View {
     }
     
     @ViewBuilder func showCellImage() -> some View {
-        AsyncImage(url: URL(string: "https://image.tmdb.org/t/p/w500/\(show.backdrop_path)"), content: { phase in
+        AsyncImage(url: URL(string: backDropPath), content: { phase in
             switch phase {
                 case .success(let image):
                 image
@@ -47,9 +50,9 @@ struct ShowCellView: View {
             Text(show.name)
                 .lineLimit(1)
             HStack {
-                Text(show.first_air_date)
+                Text(show.firstAirDate)
                 Spacer()
-                Text(String(format: "%.1f", [show.vote_average]))
+                Text(String(format: "%.1f", [show.voteAverage]))
             }
             .font(.caption2)
             .lineLimit(1)
