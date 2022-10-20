@@ -18,7 +18,13 @@ struct HomeView: View {
     var body: some View {
         VStack {
             categoriesPicker()
-            showsList()
+            if let error = viewModel.error {
+                Text(error.statusMessage)
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    .foregroundColor(.white)
+            } else {
+                showsList()
+            }
         }
         .background(Color.init(.almostBlack))
         .onAppear {
