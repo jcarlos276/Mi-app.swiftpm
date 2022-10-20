@@ -1,6 +1,6 @@
 import SwiftUI
 
-struct ServiceError: Error, Decodable {
+struct ServiceError: Error, Codable {
     let statusCode: Int
     let statusMessage: String
     

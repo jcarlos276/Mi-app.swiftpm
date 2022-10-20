@@ -1,4 +1,4 @@
-import SwiftUI
+import UIKit
 
 extension CGColor {
     static let almostBlack = CGColor(red: 10/255, green: 21/255, blue: 27/255, alpha: 1.0)
