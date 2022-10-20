@@ -37,7 +37,7 @@ struct NetworkService: NetworkServiceProtocol {
                     print("FAILURE")
                     do {
                         if let data = moyaError.response?.data {
-                            let customError = try JSONDecoder().decode(ServiceError.self, from: data)
+                            let customError = try JSONDecoder.snakeCase.decode(ServiceError.self, from: data)
                             promise(.failure(customError))
                         } else {
                             promise(.failure(ServiceError()))
